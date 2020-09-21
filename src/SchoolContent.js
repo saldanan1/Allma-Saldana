@@ -5,10 +5,6 @@ import { PageHeader } from 'antd';
 
 import './App.css';
 import 'antd/dist/antd.css';
-
-import programsData from './data/programs.json';
-import fieldsData from './data/fields.csv';
-import schoolsData from './data/ma_schools.json'
 import { Space, Card } from 'antd';
 
 export default function SchoolContent(props){

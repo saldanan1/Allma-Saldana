@@ -6,8 +6,7 @@ import 'antd/dist/antd.css';
 
 import SchoolContent from './SchoolContent'
 
-import programsData from '../college-search-frontend/programs.json';
-import schoolsData from '../college-search-frontend/ma_schools.json'
+import schoolsData from './ma_schools.json'
 import { Space, Card, Button } from 'antd';
 import { Radio } from 'antd';
 import { Table } from 'antd';
