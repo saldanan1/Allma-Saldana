@@ -6,9 +6,8 @@ import 'antd/dist/antd.css';
 
 import SchoolContent from './SchoolContent'
 
-import programsData from './data/programs.json';
-import fieldsData from './data/fields.csv';
-import schoolsData from './data/ma_schools.json'
+import programsData from '../college-search-frontend/programs.json';
+import schoolsData from '../college-search-frontend/ma_schools.json'
 import { Space, Card, Button } from 'antd';
 import { Radio } from 'antd';
 import { Table } from 'antd';
@@ -73,7 +72,7 @@ function App (){
         expandable={{
         expandedRowRender: school =>
          <p style={{ margin: 0 }}>
-           <Button href={"/"+school.INSTURL} target="_blank" rel="noopener noreferrer" size="medium" variant="outlined">
+           <Button href={school.INSTURL} target="_blank" rel="noopener noreferrer" size="medium" variant="outlined">
             Click me
            </Button>
            
