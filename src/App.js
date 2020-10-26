@@ -4,13 +4,14 @@ import './App.css';
 import 'antd/dist/antd.css';
 
 import TableView from './TableView'
-import MapView from './MapView'
+import QuickDataView from './QuickData'
 
 
 function App (){
     return (
       <div>
         <TableView/>
+        <QuickDataView />
       </div>
     );
   }

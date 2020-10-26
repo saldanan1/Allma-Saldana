@@ -3,21 +3,22 @@ import TableViewExpanded from './TableViewExpanded'
 import Highlighter from 'react-highlight-words';
 
 
-import { Table, Input, Button, Space } from 'antd';
+import { Table, Input, Button, Space, Tag} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import schoolsData from './ma_schools.json'
+import incidientData from './incidents.json'
 
-Object.keys(schoolsData).forEach(function(key) {
+Object.keys(incidientData.incidents).forEach(function(key) {
     // console.log('Key : ' + key + ', Value : ' + schoolsData[key].INSTNM)
-    schoolsData[key].key = key
-  })
+    incidientData.incidents[key].key = key
+})
+incidientData.incidents.sort((a,b) => a.incidentStatusId.localeCompare(b.incidentStatusId))
 class TableView extends React.Component {
     state = {
         searchText: '',
         searchedColumn: '',
+        columns: this.columns
       };
-    
       getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
           <div style={{ padding: 8 }}>
@@ -82,35 +83,49 @@ class TableView extends React.Component {
         clearFilters();
         this.setState({ searchText: '' });
       };
-    render(){
-        const columns = [
+      columns = [
+        {
+          title: 'Name', 
+          dataIndex: 'name',
+          key: 'name',
+          ...this.getColumnSearchProps('name'),
+        },
+        {
+          title: 'Status',
+          dataIndex: 'incidentStatusId',
+          key: 'incidentStatusId',
+          filters: [
             {
-              title: 'School Name', 
-              dataIndex: 'INSTNM',
-              key: 'INSTNM',
-              ...this.getColumnSearchProps('INSTNM'),
+              text: 'Declared',
+              value: 'DECLARED',
             },
             {
-              title: 'Location',
-              dataIndex: 'CITY',
-              key: 'CITY',
-              ...this.getColumnSearchProps('CITY'),
-            }
-          ];
-        
-    return <Table 
-      columns={columns} 
-      expandable={{
-      expandedRowRender: school =>
-       <div style={{ margin: 0 }}>
-         <TableViewExpanded 
-         schoolObj ={school}
-         />
-       </div>
-      }}
-      dataSource={schoolsData} 
-      rowKey={"key"}
-      />
-    }
+              text: 'Resolved',
+              value: 'RESOLVED',
+            },
+          ],
+          // specify the condition of filtering result
+          // here is that finding the name started with `value`
+          onFilter: (value, record) => record.incidentStatusId.indexOf(value) === 0,
+          sorter: (a, b) => a.incidentStatusId.localeCompare(b.incidentStatusId)
+        },
+      ]; 
+    render(){
+      return <div>
+        <Table 
+        columns={this.columns} 
+        expandable={{
+        expandedRowRender: incident =>
+        <div style={{ margin: 0 }}>
+          <TableViewExpanded 
+          incidentObj = {incident}
+          />
+        </div>
+        }}
+        dataSource={incidientData.incidents} 
+        rowKey={"key"}
+        />
+        </div>
+      }
 }
 export default TableView;
