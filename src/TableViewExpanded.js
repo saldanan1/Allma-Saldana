@@ -1,5 +1,5 @@
 import React from 'react';
-import { Statistic, Card, Row, Col } from 'antd';
+import { Statistic, Card, Row, Col, Button } from 'antd';
 import Participants from './Participants';
 
 export default function InCardData(incidentObj){
@@ -23,9 +23,16 @@ export default function InCardData(incidentObj){
       participants = "No Participants"
     }
 
+    let TEAM_ID;
+    let CHANNEL_ID;
+    let deepLinkSlack;
     let channelName;
     if (incidentObj.incidentObj.channelName !== null){
+      TEAM_ID = incidentObj.incidentObj.workspace.teamId
+      CHANNEL_ID = incidentObj.incidentObj.channelId
+
       channelName = incidentObj.incidentObj.channelName
+      deepLinkSlack = "slack://channel?team={"+TEAM_ID+"}&id={"+CHANNEL_ID+"}"
     }else{
       channelName = "No Channel Name"
     }
@@ -75,19 +82,16 @@ export default function InCardData(incidentObj){
                 valueStyle={{ color: "black" }}
               />
             </Card>
-            <Card >
-              {people}
-            </Card>
-          </Col>
-          <Col span={12}>
             <Card>
-              <Statistic
+            <Statistic
                 title="Channel Name"
                 value={channelName}
                 precision={0}
-                valueStyle={{color: "black"}}
+                valueStyle={{ color: "black" }}
               />
             </Card>
+          </Col>
+          <Col span={12}>
             <Card>
               <Statistic
                 title="Created On"
@@ -96,18 +100,14 @@ export default function InCardData(incidentObj){
                 valueStyle={{color: "black"}}
               />
             </Card>
+            <Card >
+              {people}
+            </Card>
           </Col>
         </Row>
         <br></br>
-        <Row gutter={10} type="flex">
-            <Col span={24}>
-                {/* <MapView
-                incidentObj={incidentObj.incidentObj}/> */}
-            </Col>
-        </Row>
-        <br></br>
         <Row justify="center">
-            {/* <Button href={"http://"+incidentObj.incidentObj.INSTURL} target="_blank">Check out {incidentObj.incidentObj.INSTNM}'s Website</Button> */}
+            <Button size="large" href={deepLinkSlack}>Check this issue out on Slack</Button>
         </Row>
       </div>
     )

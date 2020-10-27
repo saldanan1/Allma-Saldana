@@ -5,16 +5,16 @@ export default function Participants(participants){
     let participantsRole;
     let participantsName;
     let participantsAvatar;
-        if (participants.participants.role !== null){
-                participantsRole = participants.participants.role.name
-                participantsName = participants.participants.user.realName
-                if (participants.participants.role.id === 1){
-                    participantsAvatar = participants.participants.user.avatarUrl
-                }
-        }else{ 
-            participantsName = "No Participant" 
-            participantsRole = "No Role" 
+    if (participants.participants.role !== null){
+        participantsRole = participants.participants.role.name
+        participantsName = participants.participants.user.realName
+        if (participants.participants.role.id === 1){
+            participantsAvatar = participants.participants.user.avatarUrl
         }
+    }else{ 
+        participantsName = "No Participant" 
+        participantsRole = "No Role" 
+    }
     return (
         <div>
             <Row gutter={16}>

@@ -2,16 +2,14 @@ import React from 'react';
 import TableViewExpanded from './TableViewExpanded'
 import Highlighter from 'react-highlight-words';
 
-
-import { Table, Input, Button, Space, Tag} from 'antd';
+import { Table, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-
 import incidientData from './incidents.json'
 
 Object.keys(incidientData.incidents).forEach(function(key) {
-    // console.log('Key : ' + key + ', Value : ' + schoolsData[key].INSTNM)
     incidientData.incidents[key].key = key
 })
+console.log(incidientData)
 incidientData.incidents.sort((a,b) => a.incidentStatusId.localeCompare(b.incidentStatusId))
 class TableView extends React.Component {
     state = {
@@ -89,6 +87,7 @@ class TableView extends React.Component {
           dataIndex: 'name',
           key: 'name',
           ...this.getColumnSearchProps('name'),
+          ...this.getColumnSearchProps('description'),
         },
         {
           title: 'Status',
@@ -104,8 +103,6 @@ class TableView extends React.Component {
               value: 'RESOLVED',
             },
           ],
-          // specify the condition of filtering result
-          // here is that finding the name started with `value`
           onFilter: (value, record) => record.incidentStatusId.indexOf(value) === 0,
           sorter: (a, b) => a.incidentStatusId.localeCompare(b.incidentStatusId)
         },
